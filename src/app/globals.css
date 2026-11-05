@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-deep: #03120b;
+    --bg-surface: #072215;
+    --bg-elevated: #0e3422;
+    --emerald-glow: #10b981;
+    --emerald-dim: #059669;
+    --text-parchment: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent-gold: #d4af37;
+  }
+
+  body {
+    background-color: var(--bg-deep);
+    color: var(--text-parchment);
+    font-family: 'Cinzel', 'Georgia', serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom Grimoire Card Glow & Borders */
+.grimoire-card {
+  background: linear-gradient(145deg, #072215 0%, #04180e 100%);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  box-shadow: 0 4px 20px -2px rgba(3, 18, 11, 0.8), 
+              inset 0 0 15px rgba(16, 185, 129, 0.03);
+  transition: all 0.3s ease-in-out;
+}
+
+.grimoire-card:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 6px 25px -2px rgba(16, 185, 129, 0.15), 
+              inset 0 0 20px rgba(16, 185, 129, 0.08);
+}
+
+.grimoire-input {
+  background-color: #04130b;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--text-parchment);
+}
+
+.grimoire-input:focus {
+  outline: none;
+  border-color: var(--emerald-glow);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
 }
