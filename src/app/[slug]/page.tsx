@@ -78,7 +78,7 @@ export default async function PostPage({ params }: PageProps) {
       </main>
 
       <footer className="border-t border-emerald-950/60 py-8 text-center text-xs text-slate-500">
-        <p>© 2026 xDravynx. Built with Next.js, Sanity, and Tailwind CSS.</p>
+        <p>© 2026 xDravynx Built with Next.js, Sanity, and Tailwind CSS.</p>
       </footer>
     </div>
   );
