@@ -29,7 +29,7 @@ export default async function PostPage({ params }: PageProps) {
       <header className="border-b border-emerald-950/60 bg-[#090d0b]/90 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="font-semibold text-emerald-400 tracking-tight text-lg">
-            xDravynx.
+            xDravynx
           </Link>
           <Link href="/" className="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
             &larr; Back to articles
