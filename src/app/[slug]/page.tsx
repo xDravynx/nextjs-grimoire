@@ -2,10 +2,18 @@ import Link from "next/link";
 import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { notFound } from "next/navigation";
+import { PortableText } from "@portabletext/react";
 
 export const instant = false;
 
-const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
+// 1. Updated query to fetch the rich text body field
+const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
+  title,
+  publishedAt,
+  excerpt,
+  body
+}`;
+
 const options = { next: { revalidate: 30 } };
 
 interface PageProps {
@@ -58,10 +66,36 @@ export default async function PostPage({ params }: PageProps) {
 
           <hr className="border-emerald-950/60" />
 
+          {/* 2. Render Portable Text with custom styling overrides */}
           <div className="text-slate-300 leading-relaxed space-y-6 text-base md:text-lg font-light">
-            <p>
-              {post.excerpt || "Article content loading..."}
-            </p>
+            {post.body ? (
+              <PortableText 
+                value={post.body} 
+                components={{
+                  block: {
+                    h2: ({children}) => <h2 className="text-2xl font-semibold text-slate-100 mt-8 mb-4">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-xl font-semibold text-slate-200 mt-6 mb-3">{children}</h3>,
+                    normal: ({children}) => <p className="mb-4">{children}</p>,
+                  },
+                  list: {
+                    bullet: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>,
+                    number: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>,
+                  },
+                  marks: {
+                    link: ({value, children}) => {
+                      const target = (value?.href || '').startsWith('http') ? '_blank' : undefined;
+                      return (
+                        <a href={value?.href} target={target} rel={target === '_blank' ? 'noindex nofollow' : ''} className="text-emerald-400 underline hover:text-emerald-300 transition-colors">
+                          {children}
+                        </a>
+                      );
+                    }
+                  }
+                }}
+              />
+            ) : (
+              <p>{post.excerpt || "Article content loading..."}</p>
+            )}
           </div>
 
         </article>
